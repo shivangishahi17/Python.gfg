@@ -1,0 +1,58 @@
+#User function Template for python3
+
+class Solution:
+    def countSmallerThanEqualToMid(self, row, mid):
+        # Here we need to figure out the immidiate index which is actually greater than middle
+        # refer to striver videos
+        low=0
+        high=len(row)-1
+        
+        while(low<=high):
+            md=(low+high)//2
+            
+            if row[md]<=mid:
+                low=md+1
+            else:
+                high=md-1
+        return low
+        
+    def median(self, matrix, R, C):
+    	#code here
+        # initaially assighn the search space.
+    	low=1
+    	high=1e9
+    	
+    	while(low<=high):
+    	    mid=(low+high)//2
+    	   # Check how many are lesser than middle
+    	    count=0
+    	    for i in range(R):
+    	        count+=self.countSmallerThanEqualToMid(matrix[i], mid)
+    	    if count<=((R*C)//2):
+    	        low=mid+1
+    	    else:
+    	        high=mid-1
+        return int(low)
+    	    
+    # 	T.C.=O(log2(2^32)*R*loc(C) = O(32*R*log(C)) as we are running for every row and in every row 
+    #   we are implementing a Binary Search on it's column length. So, the length of the column is C
+    #   S.C.=O(1)
+
+
+#{ 
+ # Driver Code Starts
+#Initial Template for Python 3
+
+if __name__ == '__main__': 
+    ob = Solution()
+    t = int (input ())
+    for _ in range (t):
+        r,c = map(int,input().strip().split())
+        matrix = [[0 for j in range(c)] for i in range(r)]
+        for i in range(r):
+            t=[int(el) for el in input().split()]
+            for j in range(c):
+                matrix[i][j]=t[j]
+        ans = ob.median(matrix, r, c);
+        print(ans)
+# } Driver Code Ends
